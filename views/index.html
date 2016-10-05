@@ -49,15 +49,16 @@
         <div class="panel-heading">
           <div class="day-buttons">
             <button class="btn btn-circle day-btn current-day">1</button>
-            <button class="btn btn-circle day-btn">2</button>
-            <button class="btn btn-circle day-btn">3</button>
+            <!-- <button class="btn btn-circle day-btn">2</button>
+            <button class="btn btn-circle day-btn">3</button> -->
             <button class="btn btn-circle day-btn" id="day-add">+</button>
           </div>
         </div>
         <div class="panel-body" id="itinerary">
           <div>
             <h4>My Hotel</h4>
-            <ul class="list-group">
+            <ul class="list-group" id="my-hotel-list">
+
               <div class="itinerary-item">
                 <span class="title" id="hotel-title"></span>
                 <button class="btn btn-xs btn-danger remove btn-circle">x</button>
@@ -66,7 +67,7 @@
           </div>
           <div>
             <h4>My Restaurants</h4>
-            <ul class="list-group" id="restaurant-list">
+            <ul class="list-group" id="my-restaurant-list">
               <div class="itinerary-item">
                 <span class="title" id="restaurant-title"></span>
                 <button class="btn btn-xs btn-danger remove btn-circle">x</button>
@@ -75,7 +76,7 @@
           </div>
           <div>
             <h4>My Activities</h4>
-            <ul class="list-group">
+            <ul class="list-group" id="my-activity-list">
               <div class="itinerary-item">
                 <span class="title" id="activity-title"></span>
                 <button class="btn btn-xs btn-danger remove btn-circle">x</button>
@@ -109,19 +110,65 @@ var currentHotels = [],
     currentRestaurants = [],
     currentActivities = [];
 
-// $("#hotel-add").on("click", function() {
-//   currentHotels.push($("#hotel-choices").val())
-//   $("#hotel-title").text("Test");
-//   $("#hotel-title").text("Two");
-// })
-//
-$("#restaurant-add").on("click", function() {
-  currentRestaurants.push($("#restaurant-choices").val())
+$("#hotel-add").on("click", function() {
+  currentHotels.push($("#hotel-choices").val());
+  var currentHotel = currentHotels.pop();
+  var button = "<button class='btn btn-xs btn-danger remove btn-circle'>x</button>"
+  var newButton = $(button)
+  newButton.on("click", function() {
+    newButton.prev().remove();
+    newButton.remove();
+  })
+  $("#my-hotel-list").append("<li>" + currentHotel, newButton, "</li>");
 
-  for (var i = 0; i < currentRestaurants.length; i++) {
-    $("#restaurant-list").append("<li>" + currentRestaurants[i] + "</li>"));
-  }
-}
+})
+
+$("#restaurant-add").on("click", function() {
+  currentRestaurants.push($("#restaurant-choices").val());
+  var currentRestaurant = currentRestaurants.pop();
+  var button = "<button class='btn btn-xs btn-danger remove btn-circle'>x</button>"
+  var newButton = $(button)
+  newButton.on("click", function() {
+    newButton.prev().remove();
+    newButton.remove();
+  })
+  $("#my-restaurant-list").append("<li>" + currentRestaurant, newButton, "</li>");
+
+})
+
+$("#activity-add").on("click", function() {
+  currentActivities.push($("#activity-choices").val());
+  var currentActivity = currentActivities.pop();
+  var button = "<button class='btn btn-xs btn-danger remove btn-circle'>x</button>"
+  var newButton = $(button)
+  newButton.on("click", function() {
+    newButton.prev().remove();
+    newButton.remove();
+  })
+  $("#my-activity-list").append("<li>" + currentActivity, newButton, "</li>");
+
+})
+
+var dayCounter = 1;
+$("#day-add").on("click", function() {
+  dayCounter++;
+  var button = "<button class='btn btn-circle day-btn'>" + dayCounter.toString() + "</button>";
+  var newButton = $(button);
+  var addButton = "<button class='btn btn-circle day-btn' id='day-add'>+</button>";
+  var newAddButton = $(addButton);
+  
+  $("#day-add").remove();
+
+  $(".day-buttons").append(newButton);
+  $(".day-buttons").append(newAddButton);
+})
+
+
+//
+// $("#restaurant-add").on("click", function() {
+//   currentRestaurants.push($("#restaurant-choices").val())
+//
+// }
 
 
 // $("#activity-add").on("click", function() {
