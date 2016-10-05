@@ -41,20 +41,20 @@
     <div class="col-xs-6 col-sm-12">
       <h3>
         <span id="day-title">
-          <span>Day 2</span>
+          <span>Day 1</span>
           <button class="btn btn-xs btn-danger remove btn-circle">x</button>
         </span>
       </h3>
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="day-buttons">
-            <button class="btn btn-circle day-btn current-day">1</button>
+            <button class="btn btn-circle day-btn current-day" id="day-1">1</button>
             <!-- <button class="btn btn-circle day-btn">2</button>
             <button class="btn btn-circle day-btn">3</button> -->
             <button class="btn btn-circle day-btn" id="day-add">+</button>
           </div>
         </div>
-        <div class="panel-body" id="itinerary">
+        <div class="panel-body" id="itinerary-1">
           <div>
             <h4>My Hotel</h4>
             <ul class="list-group" id="my-hotel-list">
@@ -150,18 +150,65 @@ $("#activity-add").on("click", function() {
 })
 
 var dayCounter = 1;
-$("#day-add").on("click", function() {
+var itineraryCounter = 1;
+var addButtonHandle = function() {
   dayCounter++;
-  var button = "<button class='btn btn-circle day-btn'>" + dayCounter.toString() + "</button>";
+  itineraryCounter++;
+  // var newItinerary = `<div class='panel-body' id='itinerary-` + itineraryCounter.toString() + `>
+  //   <div>
+  //     <h4>My Hotel</h4>
+  //     <ul class='list-group' id='my-hotel-list'>
+  //
+  //       <div class='itinerary-item'>
+  //         <span class='title' id='hotel-title'></span>
+  //         <button class='btn btn-xs btn-danger remove btn-circle'>x</button>
+  //       </div>
+  //     </ul>
+  //   </div>
+  //   <div>
+  //     <h4>My Restaurants</h4>
+  //     <ul class='list-group' id='my-restaurant-list'>
+  //       <div class='itinerary-item'>
+  //         <span class='title' id='restaurant-title'></span>
+  //         <button class='btn btn-xs btn-danger remove btn-circle'>x</button>
+  //       </div>
+  //     </ul>
+  //   </div>
+  //   <div>
+  //     <h4>My Activities</h4>
+  //     <ul class='list-group' id='my-activity-list'>
+  //       <div class='itinerary-item'>
+  //         <span class='title' id='activity-title'></span>
+  //         <button class='btn btn-xs btn-danger remove btn-circle'>x</button>
+  //       </div>
+  //     </ul>
+  //   </div>`
+
+
+  var button = "<button class='btn btn-circle day-btn' id='day-" + (dayCounter).toString() + "'>" + dayCounter.toString() + "</button>";
   var newButton = $(button);
+  newButton.css({
+    background: "#a8c9dd",
+    color: "#736357"
+  });
+  $("#day-" + (dayCounter - 1).toString()).css({
+    background: "#736357",
+    color: "#a8c9dd"
+  });
   var addButton = "<button class='btn btn-circle day-btn' id='day-add'>+</button>";
   var newAddButton = $(addButton);
-  
+  $("#day-title").text("Day " + dayCounter.toString());
+  newAddButton.on("click", addButtonHandle);
   $("#day-add").remove();
 
   $(".day-buttons").append(newButton);
+  // newButton.append(newItinerary);
+  $("#itinerary-" + (itineraryCounter - 1).toString()).css("visibility", "hidden")
   $(".day-buttons").append(newAddButton);
-})
+}
+
+$("#day-add").on("click", addButtonHandle)
+
 
 
 //
